@@ -1,0 +1,148 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12 col-xl-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Assign Service</h5>
+                </div>
+                <div class="card-body">
+                    <form class="needs-validation" [formGroup]="patientServiceForm" (submit)="submit()">
+                        <div class="row">
+                            <div class="col-sm-4 col-xl-4 mb-2">
+                                <label>Select Patient</label><br />
+                                <input list="browsers" type="text" class="form-control"
+                                    placeholder="Search Patient By Name" formControlName="patientName"
+                                    (keyup)="search($event,1)" (change)="select($event,1)">
+                                <small
+                                    [class.d-none]="patientServiceForm.get('patientName').valid || patientServiceForm.get('patientName').untouched"
+                                    class="text-danger">Invalid! should contains only alphabets.</small>
+                                <datalist id="browsers">
+                                    <option *ngFor="let item of patientList" [value]="item.id">{{item.firstName}}
+                                        {{item.lastName}}</option>
+                                </datalist>
+                            </div>
+                            <div class="col-sm-4 col-xl-4 mb-2">
+                                <label>Select Mobile Number</label><br />
+                                <input list="codes" type="number" class="form-control"
+                                    placeholder="Search Patient By Mobile No." formControlName="mobileNumber"
+                                    (keyup)="search($event,2)" (change)="select($event,1)">
+                                <small
+                                    [class.d-none]="patientServiceForm.get('mobileNumber').valid || patientServiceForm.get('mobileNumber').untouched"
+                                    class="text-danger">Invalid! should contain length must be 10 and
+                                    without
+                                    '0','+91'.</small>
+                                <datalist id="codes">
+                                    <option *ngFor="let item of patientList" [value]="item.id">{{item.mobileNumber}}
+                                    </option>
+                                </datalist>
+                            </div>
+                            <div class="col-sm-4 col-xl-4 mb-2">
+                                <label>Card Number</label><br />
+                                <input type="number" readonly class="form-control" placeholder="Card Number"
+                                    formControlName="cardNumber">
+                                <small
+                                    [class.d-none]="patientServiceForm.get('cardNumber').valid || patientServiceForm.get('cardNumber').untouched"
+                                    class="text-danger">Invalid! should contains Card Number.</small>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4 col-xl-4 mb-2">
+                                <label>Bill Number</label><br />
+                                <input type="text" class="form-control" placeholder="Search Card"
+                                    formControlName="billNumber">
+                                <small
+                                    [class.d-none]="patientServiceForm.get('billNumber').valid || patientServiceForm.get('billNumber').untouched"
+                                    class="text-danger">Invalid! should required Bill Number</small>
+                            </div>
+                            <div class="col-sm-4 col-xl-4 mb-2">
+                                <label>Date</label><br />
+                                <input type="date" readonly class="form-control" placeholder="First Name"
+                                    formControlName="date">
+                                <small
+                                    [class.d-none]="patientServiceForm.get('date').valid || patientServiceForm.get('date').untouched"
+                                    class="text-danger">Invalid! should contains Date.</small>
+                            </div>
+                            <div class="col-sm-4 col-xl-4 mb-2">
+                                <label>time</label><br />
+                                <input type="text" readonly class="form-control" placeholder="Mobile Number"
+                                    formControlName="time">
+                                <small
+                                    [class.d-none]="patientServiceForm.get('time').valid || patientServiceForm.get('time').untouched"
+                                    class="text-danger">Invalid! should contains Time.</small>
+                            </div>
+
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-4 col-xl-4 mb-2">
+                                <label>Select Service</label><br />
+                                <input list="service" type="text" class="form-control" placeholder="Search Service"
+                                    formControlName="serviceName" (change)="select($event,2)">
+                                <!-- <small
+                                    [class.d-none]="patientServiceForm.get('serviceName').valid || patientServiceForm.get('serviceName').untouched"
+                                    class="text-danger">Invalid! should contains only alphabets.</small> -->
+                                <datalist id="service">
+                                    <option *ngFor="let item of serviceList" [value]="item.id">{{item.name}}
+                                    </option>
+                                </datalist>
+                            </div>
+                            <div class="col-sm-4 col-xl-4 mb-2">
+                                <label>Service Cost</label><br />
+                                <input type="number" readonly class="form-control" placeholder="Service Cost"
+                                    formControlName="costing">
+
+                            </div>
+                            <div class="col-sm-4 col-xl-4 mb-2 text-center">
+                                <label></label><br />
+                                <button type="submit" class="btn btn-dark">Assign Service</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12 col-xl-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5><span style="color:var(--primary)">{{patientServiceForm.value.patientName}}</span> Selected
+                        Services </h5>
+                </div>
+                <div class="card-body">
+                    <div class="user-status table-responsive latest-order-table">
+                        <table class="table table-bordernone">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Service</th>
+                                    <th scope="col">Cost</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of selectedService;let i = index">
+                                    <td class="name">{{item.serviceName}}</td>
+                                    <td>{{item.costing}}</td>
+                                    <td>
+                                        <app-feather-icons [icon]="'delete'" class="font-primary" (click)="removeId(i)">
+                                        </app-feather-icons>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-sm-12 text-center">
+                        <button *ngIf="!isLoading" class="btn btn-primary" [disabled]="selectedService.length < 1"
+                            (click)="submitServiceList()">Submit</button>
+                        <button *ngIf="isLoading" class="btn btn-primary" disabled>Loading <img
+                                src="assets/images/dashboard/800.gif"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12 col-xl-12 text-center">
+            <button class="btn btn-dark" (click)="reset()">Reset</button>
+        </div>
+    </div>

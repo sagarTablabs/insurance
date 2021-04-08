@@ -1,0 +1,156 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xl-12 col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-5 col-xl-5">
+                            <input class="form-control" placeholder="Search By First name" type="text"
+                                (keyup)="search($event,1)">
+                        </div>
+                        <div class="col-5 col-xl-5">
+                            <input class="form-control" type="number" placeholder="Search By Mobile No."
+                                (keyup)="search($event,2)">
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="user-status table-responsive latest-order-table">
+                        <table class="table table-bordernone">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Patient</th>
+                                    <th scope="col">Mobile No.</th>
+                                    <th scope="col">Card No.</th>
+                                    <th scope="col">Adhar Card</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of patientList | paginate: config ;let i = index;">
+                                    <td class="name">{{item.firstName}}
+                                        {{item.lastName}}</td>
+                                    <td>{{item.mobileNumber}}</td>
+                                    <td>{{item.cardNumber}}</td>
+                                    <td>{{item.aadharCard}}</td>
+                                    <td>
+                                        <app-feather-icons [icon]="'edit'" class="font-dark" (click)="openModal(item)">
+                                        </app-feather-icons>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div>
+                            <div style="text-align: center;padding: 0.8rem;">
+                                <pagination-controls (pageChange)="pageChanged($event)"></pagination-controls>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<ng-template #editModal let-modal>
+
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Patient Form</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
+    <div class="modal-body">
+        <form class="needs-validation" [formGroup]="updatepatientForm" (submit)="submit()">
+            <div class="row">
+                <div class="col-sm-4 col-xl-4 mb-2">
+                    <label>First Name</label><br />
+                    <input type="text" class="form-control" placeholder="First Name" formControlName="firstName">
+                    <small
+                        [class.d-none]="updatepatientForm.get('firstName').valid || updatepatientForm.get('firstName').untouched"
+                        class="text-danger">Invalid! should contains only alphabets.</small>
+                </div>
+                <div class="col-sm-4 col-xl-4 mb-2">
+                    <label>Middle Name</label><br />
+                    <input type="text" class="form-control" placeholder="Middle Name" formControlName="middleName">
+                    <small
+                        [class.d-none]="updatepatientForm.get('middleName').valid || updatepatientForm.get('middleName').untouched"
+                        class="text-danger">Invalid! should contains only alphabets.</small>
+                </div>
+                <div class="col-sm-4 col-xl-4 mb-2">
+                    <label>Last Name</label><br />
+                    <input type="text" class="form-control" placeholder="Last Name" formControlName="lastName">
+                    <small
+                        [class.d-none]="updatepatientForm.get('lastName').valid || updatepatientForm.get('lastName').untouched"
+                        class="text-danger">Invalid! should contains only alphabets.</small>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4 col-xl-4 mb-2">
+                    <label>Adhar Card Number</label><br />
+                    <input type="number" class="form-control" placeholder="Adhar Number" formControlName="adharNumber">
+                    <small
+                        [class.d-none]="updatepatientForm.get('adharNumber').valid || updatepatientForm.get('adharNumber').untouched"
+                        class="text-danger">Invalid! should contain lenght is 12 and 78XX 45XX
+                        97XX
+                        format.</small>
+                </div>
+                <div class="col-sm-4 col-xl-4 mb-2">
+                    <label>Pan card Number</label><br />
+                    <input type="tel" class="form-control" oninput="this.value = this.value.toUpperCase()"
+                        placeholder="Pan Number" formControlName="panNumber">
+                    <small
+                        [class.d-none]="updatepatientForm.get('panNumber').valid || updatepatientForm.get('panNumber').untouched"
+                        class="text-danger">Invalid! should be in BTXER2345E format.</small>
+                </div>
+                <div class="col-sm-4 col-xl-4 mb-2">
+                    <label>Driving Licence Number</label><br />
+                    <input oninput="this.value = this.value.toUpperCase()" type="name" class="form-control"
+                        placeholder="Driving Licence" formControlName="dringLicence">
+                    <small
+                        [class.d-none]="updatepatientForm.get('dringLicence').valid || updatepatientForm.get('dringLicence').untouched"
+                        class="text-danger">Invalid! should be in HR06 19850034761
+                        format.</small>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4 col-xl-4 mb-2">
+                    <label>Mobile Number</label><br />
+                    <input type="number" class="form-control" placeholder="Mobile Number"
+                        formControlName="mobileNumber">
+                    <small
+                        [class.d-none]="updatepatientForm.get('mobileNumber').valid || updatepatientForm.get('mobileNumber').untouched"
+                        class="text-danger">Invalid! should contain length must be 10 and
+                        without
+                        '0','+91'.</small>
+
+                </div>
+                <div class="col-sm-4 col-xl-4 mb-2">
+                    <label>Email ID</label><br />
+                    <input type="email" class="form-control" placeholder="Email Id" formControlName="email">
+                    <small
+                        [class.d-none]="updatepatientForm.get('email').valid || updatepatientForm.get('email').untouched"
+                        class="text-danger">Invalid! email address.</small>
+                </div>
+                <div class="col-sm-4 col-xl-4 mb-2">
+                    <label>Address</label><br />
+                    <textarea type="text" class="form-control" placeholder="Address" rows="4" cols="50"
+                        formControlName="address"></textarea>
+                    <small
+                        [class.d-none]="updatepatientForm.get('address').valid || updatepatientForm.get('address').untouched"
+                        class="text-danger">Invalid!should not contain special character such as
+                        * and
+                        %.</small>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-12 text-center">
+                    <button *ngIf="!isLoading" class="btn btn-primary" type="submit">Submit</button>
+                    <button *ngIf="isLoading" class="btn btn-primary" disabled>Loading <img
+                            src="assets/images/dashboard/800.gif"></button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+</ng-template>

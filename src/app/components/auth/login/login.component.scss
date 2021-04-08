@@ -1,0 +1,21 @@
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.card{
+  border: 1px solid var(--danger);
+}
+.bg-img{
+  background-image: url("../../../../assets/images/dashboard/login-bg.png");
+  background-position: center;
+  height: 100vh;
+  background-size: cover;
+  // font-family: 'Baloo Chettan 2', cursive;
+  }

@@ -1,0 +1,26 @@
+.status{
+    border-radius: 30px;
+      padding: 2px;
+  }
+  .name{
+    color: var(--primary); font-weight: bold;
+}
+.user{
+  font-family: Share Tech Mono;
+  background-color: #9BA7B2;
+  display: block;
+  border-radius: 20px;
+  -webkit-box-shadow: 0px 0px 10px 0px rgba(0,0,0,1);
+-moz-box-shadow: 0px 0px 10px 0px rgba(0,0,0,1);
+box-shadow: 0px 0px 10px 0px rgba(0,0,0,1);
+  border: 1px solid grey;
+  background: linear-gradient(-125deg, #1D3349, #06121E 55%);
+  margin-bottom: 1px;
+}
+.emboss {
+  font-family: Share Tech Mono;
+  color: white;
+}
+.btn-danger{
+  background-color: red !important;
+}

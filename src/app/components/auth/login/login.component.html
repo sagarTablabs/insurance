@@ -1,0 +1,213 @@
+<div class="bg-img">
+    <div class="page-wrapper">
+        <div class="authentication-box">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-7 p-0 card-right">
+                        <div class="card tab2-card">
+                            <div class="card-body">
+                                <ngb-tabset #ctdTabset="ngbTabset" class="tab-coupon mb-0">
+                                    <ngb-tab id="tab1">
+                                        <ng-template ngbTabTitle><i class="icon-user mr-2"></i>Login</ng-template>
+                                        <ng-template ngbTabContent>
+                                            <div class="tab-pane fade active show" id="account" role="tabpanel"
+                                                aria-labelledby="account-tab">
+                                                <form [formGroup]="loginForm" (ngSubmit)="onLoginSubmit();"
+                                                    class="form-horizontal auth-form" novalidate="">
+                                                    <div class="form-group">
+                                                        <small
+                                                            [class.d-none]="loginForm.get('username').valid || loginForm.get('username').untouched"
+                                                            class="text-danger">Phone number / Email is
+                                                            required.</small>
+                                                        <input type="text" class="form-control"
+                                                            placeholder="98xxxxxx89 / example@domain.com"
+                                                            formControlName="username">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <small
+                                                            [class.d-none]="loginForm.get('password').valid || loginForm.get('password').untouched"
+                                                            class="text-danger">Password is required.</small>
+                                                        <div style="text-align: end;">
+                                                            <i class="fa"
+                                                                [ngClass]="{'fa-eye-slash': !fieldTextType,'fa-eye': fieldTextType }"
+                                                                (click)="toggleFieldTextType()"></i>
+                                                        </div>
+
+                                                        <input [type]="fieldTextType ? 'text' : 'password'"
+                                                            placeholder="******" class="form-control" id="review"
+                                                            formControlName="password">
+                                                    </div>
+                                                    <div class="form-terms">
+                                                        <div class="custom-control custom-checkbox mr-sm-2">
+                                                            <input type="checkbox" class="custom-control-input"
+                                                                id="customControlAutosizing">
+                                                            <label class="custom-control-label"
+                                                                for="customControlAutosizing">Remember me</label>
+                                                            <a href="javascript:void(0)" [routerLink]="'/forget'"
+                                                                class="btn btn-default forgot-pass">lost your
+                                                                password</a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-button" style="text-align: center;">
+                                                        <button *ngIf="!isLoading" class="btn btn-primary" type="submit"
+                                                            [disabled]="!loginForm.valid">Login</button>
+                                                        <button *ngIf="isLoading" class="btn btn-primary"> <i
+                                                                class="fa fa-spinner fa-spin" aria-hidden="true"></i>
+                                                            &nbsp;&nbsp; Loading ...</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </ng-template>
+                                    </ngb-tab>
+
+
+                                    <!-- Registration -->
+                                    <!-- <ngb-tab id="tab2">
+                                    <ng-template ngbTabTitle><i class="icon-unlock mr-2"></i> Register
+                                        <ng-template ngbTabContent>
+                                            <form [formGroup]="registerForm" (ngSubmit)="onSubmit();"
+                                                class="form-horizontal auth-form" novalidate>
+                                                <div class="row">
+                                                    <div class="col-md-6 p-1">
+                                                        <div class="form-group">
+                                                            <label>First Name</label>
+                                                            <input type="text" class="form-control" placeholder="chet"
+                                                                [class.is-invalid]="registerForm.get('firstName').invalid && registerForm.get('firstName').touched"
+                                                                formControlName="firstName">
+                                                            <small
+                                                                [class.d-none]="registerForm.get('firstName').valid || registerForm.get('firstName').untouched"
+                                                                class="text-danger">Invalid! should contains only
+                                                                alphabets.</small>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 p-1">
+                                                        <div class="form-group">
+                                                            <label>Last Name</label>
+                                                            <input type="text" class="form-control" placeholder="Faker"
+                                                                [class.is-invalid]="registerForm.get('lastName').invalid && registerForm.get('lastName').touched"
+                                                                formControlName="lastName">
+                                                            <small
+                                                                [class.d-none]="registerForm.get('lastName').valid || registerForm.get('lastName').untouched"
+                                                                class="text-danger">Invalid! should contains only
+                                                                alphabets.</small>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-7 p-1">
+                                                        <div class="form-group">
+                                                            <label>Email</label>
+                                                            <input type="email" class="form-control"
+                                                                placeholder="example@domain.com"
+                                                                [class.is-invalid]="registerForm.get('email').invalid && registerForm.get('email').touched"
+                                                                formControlName="email">
+                                                            <small
+                                                                [class.d-none]="registerForm.get('email').valid || registerForm.get('email').untouched"
+                                                                class="text-danger">Invalid! should contains valid email
+                                                                id.</small>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-5 p-1">
+                                                        <div class="form-group">
+                                                            <label>Password&nbsp;<span><i class="fa"
+                                                                        [ngClass]="{'fa-eye-slash': !fieldTextType,'fa-eye': fieldTextType }"
+                                                                        (click)="toggleFieldTextType()"></i></span></label>
+                                                            <input [type]="fieldTextType ? 'text' : 'password'"
+                                                                class="form-control" placeholder="******"
+                                                                [class.is-invalid]="registerForm.get('password').invalid && registerForm.get('password').touched"
+                                                                formControlName="password">
+                                                            <small
+                                                                [class.d-none]="registerForm.get('password').valid || registerForm.get('password').untouched"
+                                                                class="text-danger">Invalid! at least one
+                                                                number.</small>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-6 p-1">
+                                                        <div class="form-group">
+                                                            <label>Phone Number</label>
+                                                            <input type="number" class="form-control"
+                                                                placeholder="98xxxxxx98"
+                                                                [class.is-invalid]="registerForm.get('mobileNumber').invalid && registerForm.get('mobileNumber').touched"
+                                                                formControlName="mobileNumber">
+                                                            <small
+                                                                [class.d-none]="registerForm.get('mobileNumber').valid || registerForm.get('mobileNumber').untouched"
+                                                                class="text-danger">Invalid! should contain only numbers
+                                                                and length must be 10.</small>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 p-1">
+                                                        <div class="form-group">
+                                                            <label>city</label>
+                                                            <input type="text" class="form-control" placeholder="Mumbai"
+                                                                [class.is-invalid]="registerForm.get('city').invalid && registerForm.get('city').touched"
+                                                                formControlName="city">
+                                                            <small
+                                                                [class.d-none]="registerForm.get('city').valid || registerForm.get('city').untouched"
+                                                                class="text-danger">Invalid! should contains only
+                                                                alphabets.</small>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-12 p-1">
+                                                        <div class="form-group">
+                                                            <label>Address</label>
+                                                            <input type="text" class="form-control"
+                                                                placeholder="123 Fake street"
+                                                                [class.is-invalid]="registerForm.get('address').invalid && registerForm.get('address').touched"
+                                                                formControlName="address">
+                                                            <small
+                                                                [class.d-none]="registerForm.get('address').valid || registerForm.get('address').untouched"
+                                                                class="text-danger">Invalid! should contains only
+                                                                alphabets.</small>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-8 p-1">
+                                                        <div class="form-group">
+                                                            <label>State</label>
+                                                            <input type="text" class="form-control"
+                                                                placeholder="Maharshtra"
+                                                                [class.is-invalid]="registerForm.get('state').invalid && registerForm.get('state').touched"
+                                                                formControlName="state">
+                                                            <small
+                                                                [class.d-none]="registerForm.get('state').valid || registerForm.get('state').untouched"
+                                                                class="text-danger">Invalid! should contains only
+                                                                alphabets.</small>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4 p-1">
+                                                        <div class="form-group">
+                                                            <label>Postal Code</label>
+                                                            <input type="text " class="form-control"
+                                                                placeholder="400001"
+                                                                [class.is-invalid]="registerForm.get('pincode').invalid && registerForm.get('pincode').touched"
+                                                                formControlName="pincode">
+                                                            <small
+                                                                [class.d-none]="registerForm.get('pincode').valid || registerForm.get('pincode').untouched"
+                                                                class="text-danger">Invalid! should contain only numbers
+                                                                and length must be 6.</small>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-button" style="text-align: center;">
+                                                    <button  *ngIf="!isLoading" class="btn btn-primary" type="submit"
+                                                        [disabled]="!registerForm.valid">Register</button>
+                                                        <button *ngIf="isLoading" class="btn btn-primary" > <i class="fa fa-spinner fa-spin" aria-hidden="true"></i> &nbsp;&nbsp; Loading ...</button>
+                                                </div>
+                                            </form>
+                                        </ng-template>
+                                    </ng-template>
+                                </ngb-tab> -->
+                                </ngb-tabset>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

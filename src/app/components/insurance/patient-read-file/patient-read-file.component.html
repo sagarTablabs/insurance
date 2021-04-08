@@ -1,0 +1,52 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xl-12 col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-5 col-xl-5">
+                            <label>Patient Name</label><br />
+                            <input list="browsers" class="form-control" placeholder="Search By First name" type="text"
+                                (keyup)="search($event,1)" (change)="select($event,1)" [(ngModel)]="patientName">
+                            <datalist id="browsers">
+                                <option *ngFor="let item of patientList" [value]="item.id">{{item.firstName}}
+                                    {{item.lastName}}</option>
+                            </datalist>
+
+                        </div>
+                        <div class="col-5 col-xl-5">
+                            <label>Patient Mobile Number</label><br />
+                            <input list="codes" class="form-control" type="number" placeholder="Search By Mobile No."
+                                (keyup)="search($event,2)" (change)="select($event,1)" [(ngModel)]="mobileNumber">
+                            <datalist id="codes">
+                                <option *ngFor="let item of patientList" [value]="item.id">{{item.mobileNumber}}
+                                </option>
+                            </datalist>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<ng-template #editModal let-modal>
+
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Patient Document </h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
+    <div class="modal-body">
+        <form>
+            <div class="form-group">
+                <iframe [src]="fileURL" style="width: 100%;height: 500px;"></iframe>
+            </div>
+        </form>
+        <div style="text-align: right;">
+            <button type="button" class="btn btn-outline-dark" (click)="modal.close()">Done</button>
+        </div>
+    </div>
+
+</ng-template>

@@ -1,0 +1,81 @@
+<!-- Container-fluid starts-->
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xl-3 col-md-3"></div>
+        <div class="col-xl-6 col-md-6">
+            <div class="card o-hidden widget-cards">
+                <div class="bg-primary card-body">
+                    <div class="media static-top-widget row">
+                        <div class="icons-widgets col-4">
+                            <div class="align-self-center text-center">
+                                <app-feather-icons [icon]="'users'" class="font-primary"></app-feather-icons>
+                            </div>
+                        </div>
+                        <div class="media-body col-8"><span class="m-0">Patient</span>
+                            <h3 class="mb-0"><span class="counter" [CountTo]="count" [from]="0"
+                                    [duration]="2">{{count}}</span>
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-3"></div>
+        <!-- <div class="col-xl-3 col-md-6 xl-50">
+            <div class="card o-hidden  widget-cards">
+                <div class="bg-dark card-body">
+                    <div class="media static-top-widget row">
+                        <div class="icons-widgets col-4">
+                            <div class="align-self-center text-center">
+                                <app-feather-icons [icon]="'box'" class="font-dark"></app-feather-icons>
+                            </div>
+                        </div>
+                        <div class="media-body col-8"><span class="m-0">Products</span>
+                            <h3 class="mb-0"><span class="counter" [CountTo]="1566" [from]="0"
+                                    [duration]="2">1566</span></h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+
+
+    </div>
+    <div class="row">
+        <div class="col-xl-6 xl-100">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Latest Patient</h5>
+                </div>
+                <div class="card-body">
+                    <div class="user-status table-responsive latest-order-table">
+                        <table class="table table-bordernone">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Patient</th>
+                                    <th scope="col">Mobile No.</th>
+                                    <th scope="col">Card No.</th>
+                                    <th scope="col">Adhar Card</th>
+                                    <th scope="col">Pan Card</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of patientList;">
+                                    <td class="name">{{item.firstName}}
+                                        {{item.lastName}}</td>
+                                    <td>{{item.mobileNumber}}</td>
+                                    <td>{{item.cardNumber}}</td>
+                                    <td>{{item.aadharCard}}</td>
+                                    <td>{{item.panCard}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div> <a [routerLink]="'../../insurance/patient/list'" class="btn btn-dark">View All
+                                Orders</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Container-fluid Ends-->

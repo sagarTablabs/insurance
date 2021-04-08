@@ -1,0 +1,68 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xl-12 col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-4 col-xl-4">
+                            <input list="name" class="form-control" placeholder="Search By First name" type="text"
+                                (keyup)="search($event,1)" [(ngModel)]="patientName" (change)="select($event)">
+                            <datalist id="name">
+                                <option *ngFor="let item of patientList" [value]="item.id">
+                                    {{item.firstName}}
+                                    {{item.lastName}}</option>
+                            </datalist>
+                        </div>
+                        <div class="col-3 col-xl-3">
+                            <input list="codes" class="form-control" type="number" placeholder="Mobile Number."
+                                (keyup)="search($event,2)" [(ngModel)]="mobileNumber" (change)="select($event)">
+                            <datalist id="codes">
+                                <option *ngFor="let item of patientList" [value]="item.id">{{item.mobileNumber}}
+                                </option>
+                            </datalist>
+                        </div>
+                        <div class="col-5 col-xl-5">
+                            <div class="card user" *ngIf="cardDetail != null || cardDetail != undefined">
+                                <img src="assets/images/dashboard/man.png" style="width: 15%; padding: 10px;">
+                                <div class="card-body">
+                                    <h5 class="emboss">{{cardDetail.cardNumber}}</h5><span style="text-align: end;">
+                                        <h5 class="emboss">₹{{cardDetail.amount}}</h5>
+                                    </span>
+                                    <h5 class="emboss">{{cardDetail.lastDateOfRecharge}}</h5><br />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="user-status table-responsive latest-order-table">
+                        <table class="table table-bordernone">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Service</th>
+                                    <th scope="col">Cost</th>
+                                    <th scope="col">Bill Number</th>
+                                    <th scope="col">Date</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of serviceList">
+                                    <td class="name">{{item.usage.listOfServices.name}}</td>
+                                    <td>{{item.usage.costing}}</td>
+                                    <td>{{item.usage.billNumber}}</td>
+                                    <td>{{item.usage.date}}</td>
+                                    <td>
+                                        <button *ngIf='item.isApproved == "false"' disabled
+                                            class="btn btn-danger status">Rejected</button>
+                                        <button *ngIf='item.isApproved == "true"' disabled
+                                            class="btn btn-success status">Aproved</button>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

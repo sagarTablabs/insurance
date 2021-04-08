@@ -1,0 +1,119 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-6 col-xl-6 text-center">
+            <div class="card">
+                <div class="card-body">
+                    <button *ngIf="!isLoading" class="btn btn-success" (click)="generateCard()">Create Card</button>
+                    <button *ngIf="isLoading" class="btn btn-success" disabled>Loading <img
+                            src="assets/images/dashboard/801.gif"></button>
+                </div>
+            </div>
+        </div>
+        <div class=" col-sm-6 col-xl-6">
+            <div class="card user" *ngIf="cardDetail != null || cardDetail != undefined">
+                <img src="assets/images/dashboard/man.png" style="width: 15%; padding: 10px;">
+                <div class="card-body">
+                    <h5 class="emboss">{{cardDetail.cardNumber}}</h5><span style="text-align: end;">
+                        <h5 class="emboss">₹{{cardDetail.amount}}</h5>
+                    </span>
+                    <h5 class="emboss">{{cardDetail.lastDateOfRecharge}}</h5><br />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class=" row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Assign Card To Patient</h4>
+                </div>
+                <div class="card-body needs-validation">
+                    <div class="row">
+                        <div class="col-sm-4 col-xl-4 mb-2">
+                            <label>Select Card</label><br />
+                            <input list="browsers" type="text" class="form-control" placeholder="Search Card"
+                                [(ngModel)]="cardNumber" name="browser" id="browser" (keyup)=" search($event,4)">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4 col-xl-4 mb-2">
+                            <label>Patient Name</label><br />
+                            <input list="name" type="text" class="form-control" placeholder="First Name"
+                                (keyup)="search($event,1)" [(ngModel)]="patientName" (change)="select($event,1)">
+                            <datalist id="name">
+                                <option *ngFor="let item of patientList" [value]="item.id">
+                                    {{item.firstName}}
+                                    {{item.lastName}}</option>
+                            </datalist>
+                        </div>
+                        <div class="col-sm-4 col-xl-4 mb-2">
+                            <label>Mobile Number</label><br />
+                            <input list="mobile" type="number" class="form-control" placeholder="Mobile Number"
+                                (keyup)="search($event,2)" [(ngModel)]="mobileNumber" (change)="select($event,1)">
+                            <datalist id="mobile">
+                                <option *ngFor="let item of patientList" [value]="item.id">{{item.mobileNumber}}
+                                </option>
+                            </datalist>
+                        </div>
+                        <div class="col-sm-4 col-xl-4 mb-2">
+                            <label>Adhar Card Name</label><br />
+                            <input list="adhar" type="text" class="form-control" placeholder="Adhar Number"
+                                (keyup)="search($event,3)" [(ngModel)]="adharNumber" (change)="select($event,1)">
+                            <datalist id="adhar">
+                                <option *ngFor="let item of patientList" [value]="item.id">{{item.aadharCard}}</option>
+                            </datalist>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-12 text-center">
+                            <button class="btn btn-primary" [disabled]="patientId == null || cardId == null"
+                                (click)="assignCard()">Assign
+                                Card</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Assigned <b style="color: var(--primary);">{{cardNumber}}</b> card Patient List</h4>
+                </div>
+                <div class="card-body">
+                    <div class="user-status table-responsive latest-order-table">
+                        <table class="table table-bordernone">
+                            <thead>
+                                <tr>
+                                    <th scope="col">id</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Mobile No.</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of userIds;let i = index">
+                                    <td>{{item.id}}</td>
+                                    <td class="name">{{item.name}}</td>
+                                    <td>{{item.mobile}}</td>
+                                    <td>
+                                        <app-feather-icons [icon]="'delete'" class="font-primary" (click)="removeId(i)">
+                                        </app-feather-icons>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-sm-12 text-center">
+                        <button *ngIf="!isLoading" class="btn btn-primary" [disabled]="userIds.length < 1"
+                            (click)="submiyList()">Submit</button>
+                        <button *ngIf="isLoading" class="btn btn-primary" disabled>Loading <img
+                                src="assets/images/dashboard/800.gif"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
